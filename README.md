@@ -1,6 +1,10 @@
 # Raspi Guest WLAN
 Modified Version of c't 26/2017, S. 154
 
+Credits:   
+Mirko Dölle  
+https://www.heise.de/select/ct/2017/26/1513638287074706
+
 ## [insert instructions here...]
 
 
