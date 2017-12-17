@@ -1,0 +1,49 @@
+#!/bin/bash
+
+WLANGUESTDIR=/var/www/wlanguests
+MAXAGE=2
+TFT_TTY=7
+NUMLINES=8
+
+find ${WLANGUESTDIR} -maxdepth 1 -type f -name wlanpin -mmin +${MAXAGE} -delete
+
+if [ "$1" = "--purge" ]; then
+  exit 0;
+fi
+
+chvt ${TFT_TTY}
+
+if [ -e ${WLANGUESTDIR}/wlanpin ]; then
+  # WLAN-PIN anzeigen
+  echo 0 >/sys/class/backlight/fb_st7735r/bl_power # enable backlight
+  echo -en "\e[13]" > /dev/tty${TFT_TTY} # wakeup screensaver
+  echo -en "\ec" >/dev/tty${TFT_TTY} # clear screen
+  echo -en "\n\n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;41m                  \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;41m                  \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;41m  Ihre WLAN-PIN:  \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;41m      " >/dev/tty${TFT_TTY}
+  cut -z -b1-6 <${WLANGUESTDIR}/wlanpin >/dev/tty${TFT_TTY}
+  echo -en "      \e[97;49m \n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;41m                  \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;41m                  \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en "\e[?25l" >/dev/tty${TFT_TTY}  # cursor off
+else
+  echo -en "\e[13]" > /dev/tty${TFT_TTY} # wakeup screensaver
+  echo -en "\ec" >/dev/tty${TFT_TTY} # clear screen
+  echo -en "\n\n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;42m                  \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;42m   Vielen Dank.   \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en " \e[97;42m                  \e[39;49m \n" >/dev/tty${TFT_TTY}
+  echo -en "\e[?25l" >/dev/tty${TFT_TTY}  # cursor off
+  sleep 5
+  echo -en "\ec" >/dev/tty${TFT_TTY}
+  echo -en "\n\n" >/dev/tty${TFT_TTY}
+  echo -en "\e[97;44m                    \e[39;49m\n" >/dev/tty${TFT_TTY}
+  echo -en "\e[97;44m                    \e[39;49m\n" >/dev/tty${TFT_TTY}
+  echo -en "\e[97;44m Verbinden Sie sich \e[39;49m\n" >/dev/tty${TFT_TTY}
+  echo -en "\e[97;44m    mit dem WLAN    \e[39;49m\n" >/dev/tty${TFT_TTY}
+  echo -en "\e[97;44m                    \e[39;49m\n" >/dev/tty${TFT_TTY}
+  echo -en "\e[97;44m                    \e[39;49m\n" >/dev/tty${TFT_TTY}
+  echo -en "\e[?25l" >/dev/tty${TFT_TTY}  # cursor off
+fi

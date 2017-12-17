@@ -1,0 +1,50 @@
+#!/bin/bash
+
+WLANGUESTDIR=/var/www/wlanguests
+MAXAGE=240
+IFS=$'\n'
+
+find ${WLANGUESTDIR} -maxdepth 1 -type f -mmin +${MAXAGE} -regextype posix-egrep -regex "${WLANGUESTDIR}/[[:xdigit:]]{12}$" -delete
+
+if [ "$1" = "--purge" ]; then
+  exit 0;
+fi
+
+# Dateinamen mit MAC-Adressen einlesen
+for f in $(ls -1 ${WLANGUESTDIR} | grep -o "^[[:xdigit:]]\{12\}$"); do
+  g="g_${f}"
+  declare "${g}=1"
+done
+
+# MAC-Adressen der vorhandenen iptables-Regeln einlesen
+for r in $(iptables -t mangle -L PREROUTING | grep -o "MAC [[:xdigit:]:]\{17\} MARK"); do
+  m=${r%% MARK*}
+  m=${m##*MAC }
+  m=${m//:}
+  m=${m,,}
+  g="g_${m}"
+  if [ -z "${!g}" ]; then
+    # Regel vorhanden, Datei fehlt -> loeschen
+    declare "${g}=0"
+  elif [ "${!g}" -eq 1 ]; then
+    # Regel und Datei vorhanden -> bleibt bestehen
+    declare "${g}=2"
+  fi
+done
+
+# Alle MAC-Adressen, ob aus dem Gaesteverzeichnis oder den iptables-Regeln, auswerten
+for h in ${!g_*}; do
+  m="${h:2:2}:${h:4:2}:${h:6:2}:${h:8:2}:${h:10:2}:${h:12:2}"
+  case ${!h} in
+    0)
+      # Vorhandene Regel entfernen
+      iptables -D PREROUTING -t mangle -m mac --mac-source ${m} -j MARK --set-mark 2 >> /tmp/wlanguests.log
+      ;;
+    1)
+      # Neue Regel eintragen
+      iptables -A PREROUTING -t mangle -m mac --mac-source ${m} -j MARK --set-mark 2 >> /tmp/wlanguests.log
+      ;;
+    *)
+      ;;
+  esac
+done

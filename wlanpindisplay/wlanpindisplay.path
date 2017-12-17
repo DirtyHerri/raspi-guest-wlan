@@ -1,0 +1,10 @@
+[Unit]
+Description=Triggers associated service when directory contents change
+Documentation=man:systemd.path
+Requires=network.target
+
+[Path]
+PathModified=/var/www/wlanguests/
+
+[Install]
+WantedBy=multi-user.target

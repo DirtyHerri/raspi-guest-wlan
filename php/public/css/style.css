@@ -1,0 +1,91 @@
+html, body {
+    height: 100%;
+}
+body {
+    background-image:url(/img/background.jpg?v=!);
+    background-size: 50vw;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-color:black;
+    color: black;
+    font-family:Arial, sans-serif;
+}
+
+.hidebox,.buttonbox {
+    background-color:rgba(255,255,255,0.9);
+
+}
+
+.portal {
+    position:relative;
+    margin:20px;
+    padding:10px;
+}
+
+.portal h1 {
+    text-align:center;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    font-size:48;
+    font-weight: 700;
+}
+
+.portal h3 {
+    text-align:center;
+    font-size:28;
+
+}
+
+.portal h4 {
+    text-align:center;
+    font-size:18;
+}
+
+.hidebox,.buttonbox {
+    position:relative;
+    margin:20px;
+    padding:20px;
+
+}
+
+.hidebox cite {
+    display: block;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.hidebox .toggle {
+    display: none;
+}
+
+.hidebox > div {
+    display: none;
+    max-height: none;
+}
+
+.hidebox .toggle:checked ~ div {
+    display: inline-block;
+    max-height: none;
+
+}
+
+.hidebox .toggle ~ label:before {
+    content: "Einblenden";
+}
+
+.hidebox .toggle:checked ~ label:before {
+    content: "Ausblenden";
+}
+
+.hidebox label {
+    float: right;
+}
+
+.hidebox label:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.eula {
+    max-height: 500px;
+    overflow: auto;
+}

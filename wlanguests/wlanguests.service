@@ -1,0 +1,7 @@
+[Unit]
+Description=Update iptables rules for WLAN guests
+Documentation=man:systemd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/wlanguestsctl

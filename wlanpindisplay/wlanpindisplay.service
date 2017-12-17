@@ -1,0 +1,7 @@
+[Unit]
+Description=Display PIN for WLAN guests
+Documentation=man:systemd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/wlanpindisplay
