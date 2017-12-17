@@ -1,7 +1,7 @@
-#Raspi Guest WLAN
+# Raspi Guest WLAN
 Modified Version of c't 26/2017, S. 154
 
-##[insert instructions here...]
+## [insert instructions here...]
 
 
 ***from original README:***
@@ -12,7 +12,7 @@ Raspberry Pi als offener WLAN-Router mit Captive Portal
 
 c't 26/2017, S. 154
 
-####Netzwerkkonfiguration
+#### Netzwerkkonfiguration
  - network/interfaces  
  
 Installation:  
@@ -20,7 +20,7 @@ Installation:
  sudo cp network/interfaces /etc/network/interfaces
  ```  
 
-####HostAP-Konfiguration als offener WLAN Access Point
+#### HostAP-Konfiguration als offener WLAN Access Point
  - default/hostapd
  - hostapd/hostapd.conf  
 
@@ -31,7 +31,7 @@ Installation:
  sudo cp hostapd/hostapd.conf /etc/hostapd
  ```  
 
-####DNSmasq-Konfiguration, arbeitet als DHCP-Server für 192.168.255.0/24
+#### DNSmasq-Konfiguration, arbeitet als DHCP-Server für 192.168.255.0/24
  - default/dnsmasq
  - dnsmasq.conf                   
 
