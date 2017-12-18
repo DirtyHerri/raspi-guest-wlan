@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Herris Gast-WLAN Administrator</title>
     <meta http-equiv="Refresh" content="5" />
+    <link rel="manifest" href="/manifest.json?v=3">
     <style>
         html, body {
             height: 100%;
