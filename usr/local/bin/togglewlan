@@ -1,0 +1,26 @@
+#!/bin/bash
+
+CODE="$(systemctl is-active hostapd)"
+
+if [ "$1" = "--status" ]; then
+    if [ $CODE = "active" ]
+    then
+        echo 1;
+    else
+        echo 0;
+    fi
+    exit 0;
+fi
+
+if [ $CODE = "active" ]
+then
+    systemctl stop hostapd;
+    ifdown wlan0;
+    rfkill block 0;
+    echo 0;
+else
+    rfkill unblock 0
+    ifup wlan0
+    systemctl start hostapd
+    echo 1;
+fi

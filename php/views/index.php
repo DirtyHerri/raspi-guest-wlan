@@ -1,7 +1,10 @@
 <?php include '_header.php' ?>
 
     <div class="buttonbox" align="center">
-        <form method="POST">
+        <?php if (isset($error)): ?>
+            <div class="alert alert-danger"><?php echo $error ?></div>
+        <?php endif; ?>
+        <form method="POST" action="/login">
             <p align="center">
                 PIN: <input class="form-control" type="password" name="wlanpin" value="" tabindex="1"><br>
                 <small>Ihre PIN kann von einem Administartor über <code>portal.fritz.box</code> abgerufen werden.</small>
