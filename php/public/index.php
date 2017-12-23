@@ -20,6 +20,7 @@ $app     = new \App\Application($config, $request);
 $app->setLogger(new \App\Log\Logger($config['LOGS']));
 
 $app->get('/', 'GuestController:index');
+$app->get('/login', 'GuestController:login');
 $app->post('/login', 'GuestController:login');
 $app->post('/logout', 'GuestController:logout');
 $app->get('/admin', 'AdminController:index');

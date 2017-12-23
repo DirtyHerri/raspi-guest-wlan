@@ -4,22 +4,11 @@
     <meta charset="UTF-8">
     <title>Herris Gast-WLAN Administrator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
     <link rel="manifest" href="/manifest.json?v=4">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            color: white;
-            background-size: 25vw;
-        }
-    </style>
 </head>
-<body>
+<body class="admin">
     <div class="toggle">
         <form action="/" method="post">
             <input type="hidden" name="toggle" value="0" />
@@ -66,7 +55,7 @@
                     data.append(pair[0], pair[1]);
                 }
                 fetch('/toggle', {
-                        method: 'POST',
+                        method: 'post',
                         body: data,
                         headers: new Headers()
                     })

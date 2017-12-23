@@ -47,8 +47,10 @@ class GuestController extends Controller
                 $response = new Response();
                 return $response->redirect('/');
             }
+            return $this->renderView('index', ['error' => 'PIN ungültig']);
         }
-        return $this->renderView('index', ['error' => 'PIN ungültig']);
+        $response = new Response();
+        return $response->redirect('/');
     }
 
     public function logout(Request $request)

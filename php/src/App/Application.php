@@ -78,7 +78,10 @@ class Application
                     return $ci->$f($this->request);
                 }
             }
-            return new Response(404, 'Not found');
+            //redirect 404, so devices detect our captive portal
+            //without mod_rewrite, 'ErrorDocument 404 /' in apache virtual host would have done that
+            $response = new Response();
+            return $response->redirect('/');
         } catch (\Exception $ex) {
             if ($ex instanceof UnauthorizedException) {
                 return new Response(403, 'Unauthorized');

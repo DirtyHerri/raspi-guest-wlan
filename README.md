@@ -7,6 +7,21 @@ https://www.heise.de/select/ct/2017/26/1513638287074706
 
 ## Configuration
 
+### Apache
+
+Install Apache and don't forget ```sudo a2enmod rewrite```
+
+Ensure, that .htaccess is allowed to override settings:
+
+```
+<Directory /var/www/html/public/>
+    AllowOverride all
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Directory>
+```
+
 ### Firewall
 
 The following iptables rule inside ```etc/iptables/rules.v4```

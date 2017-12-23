@@ -1,6 +1,12 @@
+@font-face{
+    font-family:'digital-clock-font';
+    src: url('/img/digital-7.ttf');
+}
+
 html, body {
     height: 100%;
 }
+
 body {
     background-image:url(/img/background.jpg?v=!);
     background-size: 50vw;
@@ -9,94 +15,58 @@ body {
     background-color:black;
     color: black;
     font-family:Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-flow: column;
 }
 
-.hidebox,.buttonbox {
-    background-color:rgba(255,255,255,0.9);
-
+body.admin {
+    font-family: Arial, sans-serif;
+    background-image: none;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: initial;
+    flex-flow: initial;
+    width: 100%;
+    color: white;
+    background-size: 25vw;
 }
 
-.portal {
-    position:relative;
-    margin:20px;
-    padding:10px;
-}
-
-.portal h1 {
+h1 {
     text-align:center;
     text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
     font-size:48;
     font-weight: 700;
 }
 
-.portal h3 {
-    text-align:center;
-    font-size:28;
-
-}
-
-.portal h4 {
-    text-align:center;
-    font-size:18;
-}
-
-.hidebox,.buttonbox {
+.panel {
+    background-color: rgba(255,255,255,0.9);
     position:relative;
     margin:20px;
-    padding:20px;
-
 }
 
-.hidebox cite {
-    display: block;
-    font-style: normal;
-    font-weight: bold;
+.panel.form {
+    flex: none;
+    height: auto;
 }
 
-.hidebox .toggle {
-    display: none;
-}
-
-.hidebox > div {
-    display: none;
-    max-height: none;
-}
-
-.hidebox .toggle:checked ~ div {
-    display: inline-block;
-    max-height: none;
-
-}
-
-.hidebox .toggle ~ label:before {
-    content: "Einblenden";
-}
-
-.hidebox .toggle:checked ~ label:before {
-    content: "Ausblenden";
-}
-
-.hidebox label {
-    float: right;
-}
-
-.hidebox label:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.eula {
-    max-height: 500px;
+.panel.terms {
     overflow: auto;
+    flex: 1;
+    display: flex;
+    justify-content: stretch;
+    flex-direction: column;
 }
 
 div.pin {
+    font-family: digital-clock-font;
     font-size: 20vw;
-    font-weight: 700;
     flex: 1;
     text-align: center;
-    color: white;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: red;
 }
 
 div.toggle {

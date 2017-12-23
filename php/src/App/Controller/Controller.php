@@ -55,7 +55,7 @@ abstract class Controller
     {
         $pin = file_exists($this->app->config('WLAN_PIN_FILE'))
             ? file_get_contents($this->app->config('WLAN_PIN_FILE'))
-            : '"Keine PIN verfügbar"';
+            : '......';
         return trim($pin);
     }
 

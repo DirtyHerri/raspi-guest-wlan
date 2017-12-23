@@ -7,6 +7,5 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css?v=!">
 </head>
 <body>
-<div class="portal">
+
     <h1>Herris Gast-WLAN</h1>
-</div>
