@@ -1,5 +1,4 @@
 <div class="docbox">
-    <h2>Nutzungsbedingungen Gäste-WLAN</h2>
     <h3>1. Gegenstand und Geltungsbereich dieser Nutzungsbedingungen</h3>
     <p>Diese Nutzungsbedingungen regeln Ihre und unsere Rechte und Pflichten im Zusammenhang mit der Nutzung unseres Gäste-WLAN-Zugangs. </p>
     <h3>2. Unsere Leistungen</h3>

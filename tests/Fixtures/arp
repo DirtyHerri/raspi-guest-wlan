@@ -1,0 +1,2 @@
+IP address       HW type     Flags       HW address            Mask     Device
+192.168.255.240  0x1         0x0         58:58:52:50:56:5b     *        wlan0

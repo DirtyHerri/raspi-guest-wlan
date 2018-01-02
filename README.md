@@ -5,7 +5,7 @@ Credits:
 Mirko Dölle  
 https://www.heise.de/select/ct/2017/26/1513638287074706
 
-## Configuration
+## Prepare Your Raspi
 
 ### Apache
 
@@ -24,6 +24,13 @@ Ensure, that .htaccess is allowed to override settings:
 
 ### Firewall
 
+Install [iptables-persistent](https://www.google.de/search?q=iptables-persistent)
+
+```sudo apt-get install iptables-persistent```
+
+Copy ```etc/iptables/rules.v4``` to ```/etc/iptables/rules.v4``` 
+or apply the rules inside manually and call ```iptables-save```.
+
 The following iptables rule inside ```etc/iptables/rules.v4```
 blocks all traffic from public to private subnet:
    
@@ -33,16 +40,20 @@ Change ```192.168.2.0/24``` to your own private subnet.
 Or remove that rule, to allow communication between guests and your devices
 inside the private network.
 
-*See also: [iptables-persistent](https://www.google.de/search?q=iptables-persistent)*
+## Script Configuration
 
 ### Admin Page (PIN Page)
 
 If you open the captive page from inside your private subnet, it will show the PIN (if there is one),
-instead of the login form. To enable the script, to identify the private submit, it has to be defined in
+instead of the login form. To enable the script, to identify the private subnet, it has to be defined in
 the configuration script ```php/src/config.php```.
 
-Leave out the last byte for the ```'SUBNET_PRIVATE'``` entry (e.g,  ```'192.168.2.'```). The script just compares the IP addresses as strings...
-no magic there.
+Leave out the last byte for the ```'subnet_private'``` entry (e.g,  ```'192.168.2.'```). 
+The script just compares the IP addresses as strings... no magic there.
+
+#### PIN Display
+
+See files in ```wlanpindisplay``` if you want to display the PIN on a LC Display.
 
 ### Read The Code!
 

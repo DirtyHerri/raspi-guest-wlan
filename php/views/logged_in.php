@@ -1,11 +1,11 @@
-<?php include '_header.php' ?>
-
-<div class="buttonbox" align="center">
+<h1><?php echo isset($title) ? $title : '' ?></h1>
+<div class="panel">
+    <div class="panel-heading">
+        <h2 class="text-center panel-title">Sie sind angemeldet</h2>
+    </div>
+    <div class="panel-body">
     <form method="POST" action="/logout">
-        <h3>Sie sind angemeldet</h3>
-        <button class="btn btn-default" name="logout" value="yes">Abmelden</button>
+        <button class="btn btn-default form-control" name="logout" value="yes">Abmelden</button>
     </form>
+    </div>
 </div>
-
-<?php include '_footer.php' ?>
-

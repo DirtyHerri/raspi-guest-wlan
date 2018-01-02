@@ -33,8 +33,7 @@ class Response
             http_response_code($this->code);
             $this->sendHeaders();
         }
-        echo $this->body;
-        ob_end_flush();
+        return $this->body;
     }
 
     /**
@@ -62,6 +61,30 @@ class Response
         $this->body                = '';
         $this->headers['Location'] = $target;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCode(): int
+    {
+        return $this->code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody(): string
+    {
+        return $this->body;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
     }
 
 }

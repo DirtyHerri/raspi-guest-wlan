@@ -12,15 +12,37 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $this->auth($request);
-        return $this->renderView('admin', ['pin' => $this->getPin()]);
+        $clearFailed = false;
+        if (file_exists($this->app->config('fail_log'))) {
+            $clearFailed = true;
+        }
+        return $this->renderView('admin', ['bodyClass' => 'admin', 'pin' => $this->getPin(), 'clearFailed' => $clearFailed]);
+    }
+
+    public function pinList(Request $request)
+    {
+        $this->auth($request);
+
+        if ($request->getMethod() == 'POST') {
+            $this->createPinList();
+            $response = new Response();
+            return $response->redirect('/list');
+        }
+
+        $list = $this->getPinList();
+        return $this->renderView('pin_list', ['list' => $list]);
     }
 
     public function toggle(Request $request)
     {
         $this->auth($request);
-        if ($this->app->config('DEBUG')) {
+        //@codeCoverageIgnoreStart
+        if ($this->app->config('DEBUG'))
+        {
             $status = $request->post('toggle');
-        } else {
+        }//@codeCoverageIgnoreEnd
+        else
+        {
             $status = shell_exec('sudo /usr/local/bin/togglewlan');
         }
         return new Response(200, $status);
@@ -29,9 +51,13 @@ class AdminController extends Controller
     public function status(Request $request)
     {
         $this->auth($request);
-        if ($this->app->config('DEBUG')) {
+        //@codeCoverageIgnoreStart
+        if ($this->app->config('DEBUG'))
+        {
             $status = rand(0,1);
-        } else {
+        }//@codeCoverageIgnoreEnd
+        else
+        {
             $status = shell_exec('/usr/local/bin/togglewlan --status');
         }
         return new Response(200, $status);
@@ -43,9 +69,19 @@ class AdminController extends Controller
         return new Response(200, $this->getPin());
     }
 
+    public function clearFailed(Request $request)
+    {
+        $this->auth($request);
+        if (file_exists($this->app->config('fail_log'))) {
+            unlink($this->app->config('fail_log'));
+        }
+        $response = new Response();
+        return $response->redirect('/admin');
+    }
+
     protected function auth(Request $request)
     {
-        if (false == $request->isPrivateSubnet($this->app->config('SUBNET_PRIVATE'))) {
+        if (false == $request->isPrivateSubnet($this->app->config('subnet_private'))) {
             throw new UnauthorizedException();
         }
     }

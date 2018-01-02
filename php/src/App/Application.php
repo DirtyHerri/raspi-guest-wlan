@@ -86,9 +86,11 @@ class Application
             if ($ex instanceof UnauthorizedException) {
                 return new Response(403, 'Unauthorized');
             }
+            //@codeCoverageIgnoreStart
             if ($this->config('DEBUG')) {
                 return new Response(500, $ex->getMessage() . '<br />' . $ex->getFile() . ' (' . $ex->getLine() . ')');
             }
+            //@codeCoverageIgnoreEnd
             return new Response(500, 'Unknown error');
         }
     }

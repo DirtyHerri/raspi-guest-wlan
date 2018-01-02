@@ -1,0 +1,1 @@
+Test View<?php echo isset($p1) ? ' '.$p1 : '' ?><?php echo isset($p2) ? ' '.$p2 : '' ?>

@@ -27,18 +27,23 @@ abstract class Controller
      */
     public function renderView($view, $params = [])
     {
-        $resopnse = new Response();
-        return $resopnse->render($this->app->config('VIEWS') . $view . '.php', $params);
+        $params['title'] = $this->app->config('ssid')();
+        $resopnse        = new Response();
+        ob_start();
+        extract($params);
+        include $this->app->config('views') . $view . '.php';
+        $params['content'] = ob_get_clean();
+        return $resopnse->render($this->app->config('views') . 'layout.php', $params);
     }
 
     /**
-     * @return bool true, if new PIN was created
+     * @return bool
      * @throws \Exception
      */
     protected function createPin()
     {
-        if (!file_exists($this->app->config('WLAN_PIN_FILE'))) {
-            file_put_contents($this->app->config('WLAN_PIN_FILE'), random_int(100000, 999999) . "\n");
+        if (!file_exists($this->app->config('wlan_pin_file'))) {
+            file_put_contents($this->app->config('wlan_pin_file'), random_int(100000, 999999) . "\n");
             return true;
         }
         return false;
@@ -46,21 +51,44 @@ abstract class Controller
 
     protected function clearPin()
     {
-        if (file_exists($this->app->config('WLAN_PIN_FILE'))) {
-            return unlink($this->app->config('WLAN_PIN_FILE'));
-        }
+        return unlink($this->app->config('wlan_pin_file'));
     }
 
     protected function getPin()
     {
-        $pin = file_exists($this->app->config('WLAN_PIN_FILE'))
-            ? file_get_contents($this->app->config('WLAN_PIN_FILE'))
+        $pin = file_exists($this->app->config('wlan_pin_file'))
+            ? file_get_contents($this->app->config('wlan_pin_file'))
             : '......';
         return trim($pin);
     }
 
+    protected function getPinList()
+    {
+        $list = [];
+        if (file_exists($this->app->config('wlan_pin_list_file'))) {
+            $list = file($this->app->config('wlan_pin_list_file'));
+        }
+        return $list;
+    }
+
+    protected function createPinList()
+    {
+        $list = $this->createPinArray();
+        file_put_contents($this->app->config('wlan_pin_list_file'), implode("\n", $this->createPinArray()));
+        return $list;
+    }
+
+    protected function createPinArray()
+    {
+        $list = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $list[] = random_int(100000, 999999);
+        }
+        return $list;
+    }
+
     protected function getMac(Request $request)
     {
-        return $request->getMac($this->app->config('ARP_TABLE'));
+        return $request->getMac($this->app->config('arp_table'));
     }
 }
