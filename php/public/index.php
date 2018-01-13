@@ -25,6 +25,8 @@ $app->get('/login', 'GuestController:login');
 $app->post('/login', 'GuestController:login');
 $app->post('/logout', 'GuestController:logout');
 $app->get('/admin', 'AdminController:index');
+$app->post('/reboot', 'AdminController:reboot');
+$app->post('/halt', 'AdminController:halt');
 $app->get('/list', 'AdminController:pinList');
 $app->post('/list', 'AdminController:pinList');
 $app->get('/pin', 'AdminController:pin');

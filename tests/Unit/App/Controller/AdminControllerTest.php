@@ -218,4 +218,30 @@ class AdminControllerTest extends TestCase
         $this->assertEquals(302, $response->getCode());
         $this->assertFileNotExists($this->app->config('fail_log'));
     }
+
+    public function testReboot()
+    {
+        global $mockShellExec;
+        global $shellExecReturn;
+        $mockShellExec   = true;
+        $shellExecReturn = 1;
+        $this->createApp([], [], ['REMOTE_ADDR' => $this->adminIp, 'REQUEST_METHOD' => 'POST']);
+        $c        = new AdminController($this->app);
+        $response = $c->reboot($this->request);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals("1", $response->getBody());
+    }
+
+    public function testHalt()
+    {
+        global $mockShellExec;
+        global $shellExecReturn;
+        $mockShellExec   = true;
+        $shellExecReturn = 1;
+        $this->createApp([], [], ['REMOTE_ADDR' => $this->adminIp, 'REQUEST_METHOD' => 'POST']);
+        $c        = new AdminController($this->app);
+        $response = $c->halt($this->request);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals("1", $response->getBody());
+    }
 }

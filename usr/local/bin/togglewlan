@@ -1,26 +1,47 @@
 #!/bin/bash
 
-CODE="$(systemctl is-active hostapd)"
+AP="$(systemctl is-active hostapd)"
+WLAN=$(cat /sys/class/net/wlan0/flags)
+WLANGUESTDIR=/var/www/wlanguests
+UPFILE="${WLANGUESTDIR}/.up"
+
+ACTIVE=0
+if [ $AP = "active" ] && [ $WLAN = 0x1003 ]; then
+    ACTIVE=1
+fi
 
 if [ "$1" = "--status" ]; then
-    if [ $CODE = "active" ]
-    then
-        echo 1;
-    else
-        echo 0;
+    echo $ACTIVE;
+    exit 0;
+fi
+
+if [ "$1" = "--fix" ]; then
+    #  RTNETLINK answers: File exists
+    #  Failed to bring up wlan0.
+    ip addr flush dev wlan0;
+    exit 0;
+fi
+
+if [ "$1" = "--check" ]; then
+    if [ $ACTIVE = 1 ] && [ ! -f ${UPFILE} ]; then
+        touch ${UPFILE};
+    elif [ $ACTIVE = 0 ] && [ -f ${UPFILE} ]; then
+        unlink ${UPFILE};
     fi
     exit 0;
 fi
 
-if [ $CODE = "active" ]
+if [ $ACTIVE = 1 ]
 then
     systemctl stop hostapd;
     ifdown wlan0;
     rfkill block 0;
+    unlink ${UPFILE};
     echo 0;
 else
     rfkill unblock 0
     ifup wlan0
     systemctl start hostapd
+    touch ${UPFILE};
     echo 1;
 fi

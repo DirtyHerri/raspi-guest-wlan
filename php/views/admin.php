@@ -24,10 +24,46 @@
 
 <div class="container-flex">
     <div class="pin" id="pin"><?php echo isset($pin) ? $pin : '' ?></div>
+    <div id="shutdown-menu">
+        <input type="checkbox" id="shutdown-menu-toggle" />
+        <label for="shutdown-menu-toggle">  Shotdown</label>
+        <ul>
+            <li><button id="btn-reboot" class="btn btn-danger">Reboot</button></li>
+            <li><button id="btn-halt" class="btn btn-danger">Halt</button></li>
+        </ul>
+    </div>
 </div>
 
 <script>
     (function(){
+
+        const reboot = document.getElementById('btn-reboot');
+        const halt   = document.getElementById('btn-halt');
+
+        reboot.addEventListener('click', function(e){
+            if (confirm('Neustart durchführen?')) {
+                fetch('/reboot', {
+                        method: 'post',
+                        headers: new Headers()
+                    })
+                    .then(function(resp){
+                        alert('Wird neu gestartet!');
+                    })
+                ;
+            }
+        });
+        halt.addEventListener('click', function(e){
+            if (confirm('Wirklich herunterfahren?')) {
+                fetch('/halt', {
+                        method: 'post',
+                        headers: new Headers()
+                    })
+                    .then(function(resp){
+                        alert('Wird heruntergefahren!');
+                    })
+                ;
+            }
+        });
 
         var fetchPin = function() {
             fetch('/pin')

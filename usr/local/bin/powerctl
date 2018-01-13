@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "--reboot" ]; then
+    shutdown -r now;
+    exit 0;
+fi
+
+if [ "$1" = "--halt" ]; then
+    shutdown -h now;
+    exit 0;
+fi
+
+echo "Usage:";
+echo " powerctl --reboot";
+echo " powerctl --halt";

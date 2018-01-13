@@ -55,6 +55,16 @@ The script just compares the IP addresses as strings... no magic there.
 
 See files in ```wlanpindisplay``` if you want to display the PIN on a LC Display.
 
+#### Execute Shell Scripts via Web UI
+
+Some scripts need sudo privileges.
+Run ```visudo``` and add the following lines
+to enable the apache user to execute those scripts.
+``` 
+www-data ALL = NOPASSWD: /usr/local/bin/togglewlan  
+www-data ALL = NOPASSWD: /usr/local/bin/powerctl
+```
+
 ### Read The Code!
 
 Go ahead and read the code, in order to understand whats going on.

@@ -79,6 +79,26 @@ class AdminController extends Controller
         return $response->redirect('/admin');
     }
 
+    public function reboot(Request $request)
+    {
+        $this->auth($request);
+        if (false == $this->app->config('DEBUG'))
+        {
+            shell_exec('sudo /usr/local/bin/powerctl --reboot');
+        }
+        return new Response(200, 1);
+    }
+
+    public function halt(Request $request)
+    {
+        $this->auth($request);
+        if (false == $this->app->config('DEBUG'))
+        {
+            shell_exec('sudo /usr/local/bin/powerctl --halt');
+        }
+        return new Response(200, 1);
+    }
+
     protected function auth(Request $request)
     {
         if (false == $request->isPrivateSubnet($this->app->config('subnet_private'))) {
