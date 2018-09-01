@@ -26,7 +26,7 @@
     <div class="pin" id="pin"><?php echo isset($pin) ? $pin : '' ?></div>
     <div id="shutdown-menu">
         <input type="checkbox" id="shutdown-menu-toggle" />
-        <label for="shutdown-menu-toggle">  Shotdown</label>
+        <label for="shutdown-menu-toggle">  Shutdown</label>
         <ul>
             <li><button id="btn-reboot" class="btn btn-danger">Reboot</button></li>
             <li><button id="btn-halt" class="btn btn-danger">Halt</button></li>
